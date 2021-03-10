@@ -1,0 +1,32 @@
+twitch:
+  client-id: "INVALID"
+  client-secret: "INVALID"
+  auto-chatters:
+    channel: "IncantaGames"
+
+chat-handlers:
+  ping:
+    enabled: true
+
+auto-chatters:
+  frequencyMs: 60000
+  list:
+   - prime:
+      enabled: true
+      message: >-
+        Did you know that you get a free Twitch subscription
+        with your Amazon Prime subscription? Learn how to support
+        your favorite streamer at https://bit.ly/2PPrE6x!
+
+event-messages:
+  subscription:
+    enabled: true
+    paid: "Thanks to @_USER_ for subscribing to the channel!"
+    prime: "Thanks to @_USER_ for subscribing to the channel!"
+  resubscription:
+    enabled: true
+    paid: "Thanks to @_USER_ for subscribing to the channel for a total of _SUBINFO_MONTHS_ months!"
+    prime: "Thanks to @_USER_ for subscribing to the channel for a total of _SUBINFO_MONTHS_ months!"
+  subscription-gift:
+    enabled: true
+    paid: "Thanks to _SUBINFO_GIFTER_ for gifting a subscription to _USER_!"

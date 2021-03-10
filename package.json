@@ -1,0 +1,21 @@
+{
+  "name": "chatbot",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "repository": "git@github.com:IncantaGames/chatbot.git",
+  "author": "Mike Seese <seesemichaelj@gmail.com>",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "async-sema": "^3.1.0",
+    "config": "^3.3.6",
+    "twitch-auth": "^4.5.0",
+    "twitch-chat-client": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/config": "^0.0.38",
+    "typescript": "^4.2.3"
+  }
+}
