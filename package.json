@@ -6,11 +6,15 @@
   "author": "Mike Seese <seesemichaelj@gmail.com>",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node lib/index.js",
+    "debug": "node --inspect=9229 lib/index.js"
   },
   "dependencies": {
     "async-sema": "^3.1.0",
     "config": "^3.3.6",
+    "js-yaml": "^4.0.0",
+    "twitch": "^4.5.0",
     "twitch-auth": "^4.5.0",
     "twitch-chat-client": "^4.5.0"
   },

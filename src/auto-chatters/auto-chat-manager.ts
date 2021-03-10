@@ -10,6 +10,10 @@ export interface IAutoChatterConfig {
   message: string | null;
 }
 
+interface IAutoChatterListItems {
+  [name: string]: IAutoChatterConfig;
+}
+
 export class AutoChatManager {
   private chatters: AutoChatter[];
   private nextChatterIdx: number;
@@ -26,8 +30,8 @@ export class AutoChatManager {
   }
 
   public initialize(): void {
-    const preconfiguredChatters = config.get<IAutoChatterConfig[]>("auto-chatters.list");
-    for (const chatterConfig of preconfiguredChatters) {
+    const preconfiguredChatters = config.get<IAutoChatterListItems>("auto-chatters.list");
+    for (const [_chatterName, chatterConfig] of Object.entries(preconfiguredChatters)) {
       if (chatterConfig.enabled) {
         if (chatterConfig.message !== null) {
           const chatter = new SimpleAutoChatter(chatterConfig.message);
@@ -49,7 +53,7 @@ export class AutoChatManager {
 
     const message = await this.chatters[this.nextChatterIdx].process();
     if (message) {
-      await this.chatClient.say(config.get<string>("twitch.auto-chatters.channel"), message);
+      await this.chatClient.say(config.get<string>("auto-chatters.channel"), message);
     }
     this.nextChatterIdx = (this.nextChatterIdx + 1) % this.chatters.length;
 

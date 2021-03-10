@@ -1,1 +1,1 @@
-config/production.yaml filter=git-crypt diff=git-crypt
+config/incanta.yaml filter=git-crypt diff=git-crypt

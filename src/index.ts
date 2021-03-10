@@ -26,7 +26,7 @@ function replaceGiftConfigString(original: string, subInfo: ChatSubGiftInfo): st
 }
 
 async function main() {
-  const tokenData = JSON.parse(await fs.readFile("./tokens.json", "utf-8"));
+  const tokenData = JSON.parse(await fs.readFile("./token.json", "utf-8"));
   const auth = new RefreshableAuthProvider(
     new StaticAuthProvider(config.get<string>("twitch.client-id"), tokenData.accessToken),
     {
@@ -39,16 +39,17 @@ async function main() {
           refreshToken,
           expiryTimestamp: expiryDate === null ? null : expiryDate.getTime()
         };
-        await fs.writeFile("./tokens.json", JSON.stringify(newTokenData, null, 4), "utf-8")
+        await fs.writeFile("./token.json", JSON.stringify(newTokenData, null, 4), "utf-8")
       }
     }
   );
 
-  const chatClient = new ChatClient(auth, { channels: ["satisfiedpear"] });
+  const chatClient = new ChatClient(auth, { channels: config.get<string[]>("channels") });
   await chatClient.connect();
 
   const autoChatManger = new AutoChatManager(chatClient);
   await autoChatManger.initialize();
+  autoChatManger.start();
 
   const chatHandlers = await InitializeHandlers();
 

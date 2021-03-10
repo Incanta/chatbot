@@ -1,22 +1,84 @@
 twitch:
   client-id: "INVALID"
   client-secret: "INVALID"
-  auto-chatters:
-    channel: "IncantaGames"
+
+channels:
+  - IncantaGames
 
 chat-handlers:
   ping:
     enabled: true
+    command: "!ping"
+    response: "Pong!"
+    aliases:
+  uptime:
+    enabled: true
+    command: "!uptime"
+    response: null
+    aliases:
+  so:
+    enabled: true
+    command: "!so"
+    response: null
+    aliases:
+      - "!shoutout"
+  lurk:
+    enabled: true
+    command: "!lurk"
+    response: null
+    aliases:
+  lurkers:
+    enabled: true
+    command: "!lurkers"
+    response: null
+    aliases:
+  discord:
+    enabled: true
+    command: "!discord"
+    response: "Join the Incanta Games Discord server at https://discord.gg/5hFrK2D"
+    aliases:
+  social:
+    enabled: true
+    command: "!social"
+    response: >-
+      https://discord.gg/5hFrK2D |
+      https://twitter.com/RocklenMagic |
+      https://reddit.com/r/rocklen |
+      https://incanta.games/rocklen
+    aliases:
+  donate:
+    enabled: true
+    command: "!donate"
+    response: >-
+      If you feel generous enough to support Incanta Games
+      bring magic to the world through games, you can donate
+      at https://ko-fi.com/incanta.
+    aliases:
+      - "!donation"
+      - "!support"
+
+shout-outs:
+  phanxgames:
+    message: ""
+  simpathey:
+    message: ""
 
 auto-chatters:
-  frequencyMs: 60000
+  channel: IncantaGames
+  frequencyMs: 120000
   list:
-   - prime:
+    prime:
       enabled: true
       message: >-
         Did you know that you get a free Twitch subscription
         with your Amazon Prime subscription? Learn how to support
-        your favorite streamer at https://bit.ly/2PPrE6x!
+        your favorite streamer with it at https://bit.ly/2PPrE6x!
+    discord:
+      enabled: true
+      message: >-
+        Chat with us when we're off stream on our Discord!
+        We usually respond pretty quickly and love to hear
+        your ideas and feedback. Join at https://discord.gg/5hFrK2D
 
 event-messages:
   subscription:
