@@ -6,7 +6,15 @@ export class ShoutOutHandler implements ChatHandler {
   private response: string;
   private aliases: string[];
 
-  constructor(command: string, response: string, aliases: string[] | null) {
+  public modsOnly: boolean;
+
+  constructor(
+    modsOnly: boolean,
+    command: string,
+    response: string,
+    aliases: string[] | null
+  ) {
+    this.modsOnly = modsOnly;
     this.response = response;
     this.aliases = (aliases || []).concat(command);
   }

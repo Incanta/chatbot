@@ -2,8 +2,10 @@ import { AutoChatter } from "./auto-chatter";
 
 export class SimpleAutoChatter implements AutoChatter {
   private recurringMessage?: string;
+  public name: string;
 
-  constructor( recurringMessage?: string) {
+  constructor(name: string, recurringMessage?: string) {
+    this.name = name;
     this.recurringMessage = recurringMessage;
   }
 

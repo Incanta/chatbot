@@ -31,10 +31,10 @@ export class AutoChatManager {
 
   public initialize(): void {
     const preconfiguredChatters = config.get<IAutoChatterListItems>("auto-chatters.list");
-    for (const [_chatterName, chatterConfig] of Object.entries(preconfiguredChatters)) {
+    for (const [chatterName, chatterConfig] of Object.entries(preconfiguredChatters)) {
       if (chatterConfig.enabled) {
         if (chatterConfig.message !== null) {
-          const chatter = new SimpleAutoChatter(chatterConfig.message);
+          const chatter = new SimpleAutoChatter(chatterName, chatterConfig.message);
           this.chatters.push(chatter);
         } else {
           // custom chatters can be implemented here
@@ -51,11 +51,16 @@ export class AutoChatManager {
   public async chat(): Promise<void> {
     await this.chatterLock.acquire();
 
-    const message = await this.chatters[this.nextChatterIdx].process();
-    if (message) {
-      await this.chatClient.say(config.get<string>("auto-chatters.channel"), message);
+    if (this.chatters.length > 0) {
+      // make sure to remodulate in case we removed other chatters
+      this.nextChatterIdx = this.nextChatterIdx % this.chatters.length;
+
+      const message = await this.chatters[this.nextChatterIdx].process();
+      if (message) {
+        await this.chatClient.say(config.get<string>("auto-chatters.channel"), message);
+      }
+      this.nextChatterIdx = (this.nextChatterIdx + 1) % this.chatters.length;
     }
-    this.nextChatterIdx = (this.nextChatterIdx + 1) % this.chatters.length;
 
     this.chatterLock.release();
   }
@@ -64,10 +69,26 @@ export class AutoChatManager {
     setInterval(() => this.chat(), this.frequencyMs);
   }
 
-  public async addChatter(chatter: AutoChatter): Promise<void> {
+  public async setChatter(chatter: AutoChatter): Promise<void> {
     await this.chatterLock.acquire();
 
-    this.chatters.push(chatter);
+    const idx = this.chatters.findIndex(c => c.name === chatter.name);
+    if (idx >= 0) {
+      this.chatters[idx] = chatter;
+    } else {
+      this.chatters.push(chatter);
+    }
+
+    this.chatterLock.release();
+  }
+
+  public async rmChatter(chatterName: string): Promise<void> {
+    await this.chatterLock.acquire();
+
+    const idx = this.chatters.findIndex(c => c.name === chatterName);
+    if (idx >= 0) {
+      this.chatters.splice(idx, 1);
+    }
 
     this.chatterLock.release();
   }

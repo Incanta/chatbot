@@ -8,37 +8,32 @@ channels:
 chat-handlers:
   ping:
     enabled: true
+    mods-only: false
     command: "!ping"
     response: "Pong!"
     aliases:
   uptime:
     enabled: true
+    mods-only: false
     command: "!uptime"
     response: null
     aliases:
   so:
     enabled: true
+    mods-only: false
     command: "!so"
     response: null
     aliases:
       - "!shoutout"
-  lurk:
-    enabled: true
-    command: "!lurk"
-    response: null
-    aliases:
-  lurkers:
-    enabled: true
-    command: "!lurkers"
-    response: null
-    aliases:
   discord:
     enabled: true
+    mods-only: false
     command: "!discord"
     response: "Join the Incanta Games Discord server at https://discord.gg/5hFrK2D"
     aliases:
   social:
     enabled: true
+    mods-only: false
     command: "!social"
     response: >-
       https://discord.gg/5hFrK2D |
@@ -48,6 +43,7 @@ chat-handlers:
     aliases:
   donate:
     enabled: true
+    mods-only: false
     command: "!donate"
     response: >-
       If you feel generous enough to support Incanta Games
@@ -56,6 +52,15 @@ chat-handlers:
     aliases:
       - "!donation"
       - "!support"
+  set:
+    enabled: true
+    # this is set to false so the custom commands can be processed
+    # the !set, !rm, and !clear commands will be mods only. the
+    # temporary commands they create will not be mod only
+    mods-only: false
+    command: "!set" # `command` is ignored for this handler
+    response: null
+    aliases: # `aliases` is ignored for this handler
 
 shout-outs:
   generic-message: >-

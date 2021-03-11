@@ -5,7 +5,15 @@ export class SimpleHandler implements ChatHandler {
   private response: string;
   private aliases: string[] | null;
 
-  constructor(command: string, response: string, aliases: string[] | null) {
+  public modsOnly: boolean;
+
+  constructor(
+    modsOnly: boolean,
+    command: string,
+    response: string,
+    aliases: string[] | null
+  ) {
+    this.modsOnly = modsOnly;
     this.command = command;
     this.response = response;
     this.aliases = aliases;

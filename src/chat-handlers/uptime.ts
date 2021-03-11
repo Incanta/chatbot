@@ -8,11 +8,15 @@ export class UptimeHandler implements ChatHandler {
   private command: string;
   private aliases: string[] | null;
 
+  public modsOnly: boolean;
+
   constructor(
+    modsOnly: boolean,
     authProvider: AuthProvider,
     command: string,
     aliases: string[] | null
   ) {
+    this.modsOnly = modsOnly;
     this.api = new ApiClient({
       authProvider
     });
