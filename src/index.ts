@@ -51,7 +51,7 @@ async function main() {
   await autoChatManger.initialize();
   autoChatManger.start();
 
-  const chatHandlers = await InitializeHandlers();
+  const chatHandlers = await InitializeHandlers(auth);
 
   chatClient.onMessage(async (channel, user, message) => {
     for (const handler of chatHandlers) {
