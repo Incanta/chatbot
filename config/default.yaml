@@ -58,10 +58,9 @@ chat-handlers:
       - "!support"
 
 shout-outs:
-  phanxgames:
-    message: ""
-  simpathey:
-    message: ""
+  generic-message: >-
+    Take a moment and check out @_USER_'s channel at https://twitch.tv/_USER_ and give them a follow!
+  list:
 
 auto-chatters:
   channel: IncantaGames
