@@ -8,6 +8,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node lib/index.js",
+    "incanta": "NODE_ENV=incanta node lib/index.js",
     "debug": "node --inspect=9229 lib/index.js"
   },
   "dependencies": {
