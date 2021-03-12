@@ -20,7 +20,7 @@ chat-handlers:
     aliases:
   so:
     enabled: true
-    mods-only: false
+    mods-only: true
     command: "!so"
     response: null
     aliases:
