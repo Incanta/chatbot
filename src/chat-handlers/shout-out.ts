@@ -22,7 +22,8 @@ export class ShoutOutHandler implements ChatHandler {
   public async handle(
     _channel: string,
     message: string,
-    _user: string
+    _user: string,
+    _isMod: boolean
   ): Promise<string | null> {
     const trimmedMessage = message.trim();
     const regex = new RegExp(`^(${this.aliases.join("|").replace(/!/g, "\\!")}) (.+)`);

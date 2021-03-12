@@ -1,6 +1,5 @@
 import { promises as fs } from "fs";
 
-import { ApiClient } from "twitch";
 import { RefreshableAuthProvider, StaticAuthProvider } from "twitch-auth";
 import { ChatClient, ChatSubGiftInfo, ChatSubInfo } from "twitch-chat-client";
 import config from "config";
@@ -48,30 +47,24 @@ async function main() {
   const chatClient = new ChatClient(auth, { channels: config.get<string[]>("channels") });
   await chatClient.connect();
 
-  const apiClient = new ApiClient({
-    authProvider: auth
-  });
-
   const autoChatManger = new AutoChatManager(chatClient);
   await autoChatManger.initialize();
   autoChatManger.start();
 
   const chatHandlers = await InitializeHandlers(auth, autoChatManger);
 
-  chatClient.onMessage(async (channel, user, message) => {
+  chatClient.onMessage(async (channel, user, message, messageInfo) => {
     for (const handler of chatHandlers) {
-      if (handler.modsOnly) {
-        // check if the user is a mod
-        try {
-          const isMod = await apiClient.helix.moderation.checkUserMod(channel.replace(/^#/, ""), user);
-          if (!isMod) {
-            continue;
-          }
-        } catch {
-          continue;
-        }
+      const isMod = messageInfo.userInfo.isMod || messageInfo.userInfo.isBroadcaster;
+      if (handler.modsOnly && !isMod) {
+        continue;
       }
-      const response = await handler.handle(channel, message, user);
+      const response = await handler.handle(
+        channel,
+        message,
+        user,
+        messageInfo.userInfo.isMod || messageInfo.userInfo.isBroadcaster
+      );
       if (response) {
         await chatClient.say(channel, response);
       }

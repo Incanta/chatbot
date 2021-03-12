@@ -3,6 +3,7 @@ export abstract class ChatHandler {
   public abstract handle(
     channel: string,
     message: string,
-    user: string
+    user: string,
+    isMod: boolean
   ): Promise<null | string>;
 }

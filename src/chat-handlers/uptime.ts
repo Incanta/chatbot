@@ -27,7 +27,8 @@ export class UptimeHandler implements ChatHandler {
   public async handle(
     channel: string,
     message: string,
-    _user: string
+    _user: string,
+    _isMod: boolean
   ): Promise<string | null> {
     const trimmedMessage = message.trim();
     if (

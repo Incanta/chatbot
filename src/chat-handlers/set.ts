@@ -26,14 +26,20 @@ export class SetHandler implements ChatHandler {
   public async handle(
     channel: string,
     message: string,
-    _user: string
+    _user: string,
+    isMod: boolean
   ): Promise<string | null> {
     const trimmedMessage = message.trim();
 
-    // TODO: make sure user doing set/rm/clear is mod
-
-    let regex = new RegExp(`^!set (handler|autochatter) (.+) "(.+)"`);
+    let regex = new RegExp(`^!(set|rm|clear)`);
     let match = regex.exec(trimmedMessage);
+
+    if (match && !isMod) {
+      return null;
+    }
+
+    regex = new RegExp(`^!set (handler|autochatter) (.+) "(.+)"`);
+    match = regex.exec(trimmedMessage);
 
     if (match && match.length >= 3) {
       const type = match[1] as "handler" | "autochatter";
